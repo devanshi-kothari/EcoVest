@@ -7,11 +7,10 @@ interface SidebarProps {
   } | null;
 }
 
-function Sidebar({ user }: SidebarProps) {
+function Sidebar() {
   return (
     <div className="sidebar">
       <ul>
-        {user && <li>Welcome, {user.name}!</li>}
         <li><Link to="/investments">Overview</Link></li>
         <li><Link to="/preferences">Preferences</Link></li>
         <li><Link to="/search">Search</Link></li>

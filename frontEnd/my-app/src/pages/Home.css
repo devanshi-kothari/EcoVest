@@ -50,8 +50,59 @@ body {
   text-align: center;
   padding: 20px;
   border-radius: 10px;
-  margin-top: 20%;
+  margin-top: 100px;
+  margin-left: 200px;
 }
+
+.preference {
+  background-color: rgba(51, 51, 51, 0.5); /* 50% opacity */
+  padding: 100px;
+  border-radius: 10px;
+  max-height: 500px;
+}
+
+.preferences-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.preference, .categories {
+  flex: 1;
+  margin: 20px;
+  padding: 70px;
+  background-color: rgba(51, 51, 51, 0.5); /* 50% opacity */
+  border-radius: 10px;
+  max-height: 500px;
+  overflow: auto; /* Add this line to make the div scrollable */
+}
+
+
+/* Custom scrollbar styles for WebKit browsers */
+.preference::-webkit-scrollbar, .categories::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.preference::-webkit-scrollbar-track, .categories::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1); /* Track color */
+  border-radius: 10px;
+}
+
+.preference::-webkit-scrollbar-thumb, .categories::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5); /* Thumb color */
+  border-radius: 10px;
+}
+
+.preference::-webkit-scrollbar-thumb:hover, .categories::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.7); /* Thumb color on hover */
+}
+
+/* Custom scrollbar styles for Firefox */
+.preference, .categories {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.1); /* Thumb and track color */
+}
+ 
 
 .links {
   margin-top: 20px;

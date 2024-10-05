@@ -13,7 +13,9 @@ function Sidebar() {
       <ul>
         <li><Link to="/investments">Overview</Link></li>
         <li><Link to="/preferences">Preferences</Link></li>
+        <li><Link to="/recommendations">Recommendations</Link></li>
         <li><Link to="/search">Search</Link></li>
+        
       </ul>
     </div>
   );

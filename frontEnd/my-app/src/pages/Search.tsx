@@ -21,6 +21,8 @@ function Search() {
     <div className="home-container">
       <Sidebar />
       <div className="search-container">
+      <h2> Company Sustainability</h2>
+
         <input
             type="text"
             value={query}

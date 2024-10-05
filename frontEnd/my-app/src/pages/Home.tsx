@@ -9,6 +9,7 @@ function Home() {
         <div className="links">
           <Link to="/login">Login</Link>
           <Link to="/about">About</Link>
+          
         </div>
       </div>
     </div>

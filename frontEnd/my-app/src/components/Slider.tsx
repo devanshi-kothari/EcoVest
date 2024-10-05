@@ -7,18 +7,26 @@ interface SliderProps {
   onChange: (value: number) => void;
 }
 
+const categories = ['Low', 'Medium', 'High'];
+
 function Slider({ label, value, onChange }: SliderProps) {
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = Number(e.target.value);
+    onChange(newValue);
+  };
+
   return (
     <div className="slider-container">
       <label>{label}</label>
       <input
         type="range"
         min="0"
-        max="100"
+        max="2"
+        step="1"
         value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
+        onChange={handleSliderChange}
       />
-      <span>{value}</span>
+      <span className = "slider-category">{categories[value]}</span>
     </div>
   );
 }

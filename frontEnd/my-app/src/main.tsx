@@ -5,6 +5,7 @@ import Login from "./pages/Login.tsx";
 import Investments from "./pages/Investments.tsx";
 import Preferences from "./pages/Preferences.tsx";
 import Search from "./pages/Search.tsx";
+import Recommendations from './pages/Recommendations.tsx';
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
     {
       path: "/preferences",
       element: <Preferences />
+    },
+    {
+      path: "/recommendations",
+      element: <Recommendations />
     },
     {
       path: "/search",

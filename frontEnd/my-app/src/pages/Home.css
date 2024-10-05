@@ -103,13 +103,10 @@ body {
   scrollbar-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.1); /* Thumb and track color */
 }
  
-
 .links {
   margin-top: 20px;
   font-size: 20px;
 }
-
-
 
 .links a {
   color: #a8e6cf; /* Example color from the palette */
@@ -172,4 +169,48 @@ body {
   padding: 10px;
   border-bottom: 1px solid #ccc;
   font-size: 16px;
+}
+
+
+.checkbox-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.categories label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 18px; /* Larger text */
+  font-weight: bold; /* Bolder font */
+  cursor: pointer; /* Pointer cursor on hover */
+  padding: 5px; /* Add padding for better click area */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth background color and text color transition */
+}
+
+.categories label:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Background color on hover */
+  padding: 10px;
+}
+
+.categories input[type="checkbox"] {
+  display: none;
+}
+
+.categories input[type="checkbox"] + label::before {
+  content: ''; /* Empty content for the pseudo-element */
+  display: inline-block;
+  width: 40px; /* Width of the custom checkbox */
+  height: 20px; /* Height of the custom checkbox */
+  margin-right: 10px; /* Space between the checkbox and the label text */
+  border: 0px solid #4CAF50; /* Border color for the custom checkbox */
+  border-radius: 3px; /* Rounded corners */
+  background-color: transparent; /* Initial background color */
+  transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.categories input[type="checkbox"]:checked + label::before {
+  background-color: #4CAF50; /* Background color for selected */
 }

@@ -3,6 +3,7 @@ const express = require('express');
 
 // Create an instance of Express
 const app = express();
+app.use(express.json());
 
 // Define a port number
 const PORT = 5109;
@@ -21,52 +22,69 @@ app.listen(PORT, () => {
 
 
 const axios = require('axios');
+const { Configuration, PlaidApi, PlaidEnvironments } = require('plaid');
 
-// Your Plaid credentials
-const PLAID_CLIENT_ID = process.env.PLAID_CLIENT_ID;
-const PLAID_SECRET = process.env.PLAID_SECRET;
-const PLAID_ENV = process.env.PLAID_ENV;
+const {
+  PLAID_CLIENT_ID,
+  PLAID_SECRET,
+  PLAID_ENV
+} = process.env;
 
-app.use(express.json());
+// Plaid client configuration
+const configuration = new Configuration({
+  basePath: PlaidEnvironments.development, // or production
+  baseOptions: {
+    headers: {
+      'PLAID-CLIENT-ID': PLAID_CLIENT_ID,
+      'PLAID-SECRET': PLAID_SECRET,
+      'Content-Type': 'application/json',
+      'Plaid-Version': '2020-09-14'
+    },
+  },
+});
+
+const plaidClient = new PlaidApi(configuration);
 
 // Endpoint to create a link token
 app.post('/create_link_token', async (req, res) => {
-  try {
-    const response = await axios.post(`${PLAID_ENV}/link/token/create`, {
-      client_id: PLAID_CLIENT_ID,
-      secret: PLAID_SECRET,
-      user: {
-        client_user_id: req.session.user_id[0].user_id, // Your user's ID in your app
-      },
-      client_name: req.session.user_name[0].user_name,
-      products: ['auth', 'transactions'],
-      country_codes: ['US'],
-      language: 'en',
-    });
+  const request = {
+    user: {
+      client_user_id: req.body.id, // Replace with a unique user ID from your system
+      email_address: req.body.address // Replace with the user's email
+    },
+    products: ['investments_auth'], // Specify the products you want to use
+    client_name: 'Gopher Brokerage',
+    language: 'en',
+    country_codes: ['US'],
+  };
 
-    res.json(response.data);
+  try {
+    const response = await plaidClient.linkTokenCreate(request);
+    const linkToken = response.data.link_token;
+    res.json({ link_token: linkToken });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error creating link token:', error);
+    res.status(500).json({ error: 'Error creating link token' });
   }
 });
 
-// Endpoint to exchange the public token for an access token
-app.post('/exchange_public_token', async (req, res) => {
-  const { public_token } = req.body;
+// // Endpoint to exchange the public token for an access token
+// app.post('/exchange_public_token', async (req, res) => {
+//   const { public_token } = req.body;
 
-  try {
-    const response = await axios.post(`${PLAID_ENV}/item/public_token/exchange`, {
-      client_id: PLAID_CLIENT_ID,
-      secret: PLAID_SECRET,
-      public_token: public_token,
-    });
+//   try {
+//     const response = await axios.post(`${PLAID_ENV}/item/public_token/exchange`, {
+//       client_id: PLAID_CLIENT_ID,
+//       secret: PLAID_SECRET,
+//       public_token: public_token,
+//     });
 
-    res.json(response.data);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+//     res.json(response.data);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
 
-app.listen(5190, () => {
-  console.log('Server running on port 5190');
-});
+// app.listen(5190, () => {
+//   console.log('Server running on port 5190');
+// });

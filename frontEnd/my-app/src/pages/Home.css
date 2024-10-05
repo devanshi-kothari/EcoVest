@@ -1,0 +1,124 @@
+/* Home.css */
+
+/** Color Variables 
+--jet: #34343Eff;
+--sage: #C3C399ff;
+--jet-2: #35363Eff;
+--reseda-green: #737E69ff;
+--onyx: #393943ff; **/
+
+/** Color Variables
+--dark-moss-green: #696A37ff;
+--lion: #A39065ff;
+--paynes-gray: #5D7273ff;
+--field-drab: #534B0Cff;
+--dark-goldenrod: #B48B00ff; **/
+
+/* Ensure html and body take up the full height */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif; /* Example font */
+}
+
+/* Apply background to the entire application */
+body {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #ffffff; /* Example text color */
+  background-image: url('../images/hiking.jpg'); /* Adjust the path as needed */
+
+}
+
+/* Ensure home-container takes up the full height */
+.home-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20%;
+}
+
+.links {
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+
+
+.links a {
+  color: #a8e6cf; /* Example color from the palette */
+  text-decoration: none;
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: 2px solid #a8e6cf; /* Example color from the palette */
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.links a:hover {
+  background-color: #B48B00ff; /* Example color from the palette */
+  color: #000000; /* Example color from the palette */
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
+  padding: 20px;
+  width: 80%;
+  max-width: 600px;
+}
+
+.search-container input {
+  margin-top: 10%;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.search-container button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.search-container button:hover {
+  background-color: #575757;
+}
+
+.search-container ul {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.search-container ul li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
+}

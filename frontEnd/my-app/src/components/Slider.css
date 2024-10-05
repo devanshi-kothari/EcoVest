@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   margin: 40px 0;
+  position: relative;
 }
 
 .slider-container label {
@@ -22,6 +23,15 @@
   outline: none;
   opacity: 0.7;
   transition: opacity 0.2s;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: -25px; /* Position above the slider */
+  width: 100%;
+  font-size: 14px; /* Adjust font size as needed */
 }
 
 .slider-container input[type="range"]:hover {

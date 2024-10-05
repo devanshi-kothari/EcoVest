@@ -12,7 +12,10 @@ function Preferences() {
   const [waterConservation, setWaterConservation] = useState(2);
   const [GreenBuildings, setGreenBuildings] = useState(2);
   const [fairLabor, setfairLabor] = useState(2);
-
+  const [carbonReduction, setcarbonReduction] = useState(2);
+  const [sustainableAgriculture, setsustainableAgriculture] = useState(2);
+  const [sustainableTransport, setsustainableTransport] = useState(2);
+  const [climateResilience, setclimateResilience] = useState(2);
 
   const [categories, setCategories] = useState<string[]>([]);
 
@@ -36,36 +39,87 @@ function Preferences() {
             <Slider label="Water Conservation" value={waterConservation} onChange={setWaterConservation} />
             <Slider label="Green Buildings" value={GreenBuildings} onChange={setGreenBuildings} />
             <Slider label="Fair Labor" value={fairLabor} onChange={setfairLabor} />
+            <Slider label="Carbon Reduction" value={carbonReduction} onChange={setcarbonReduction} />
+            <Slider label="Sustainable Agriculture" value={sustainableAgriculture} onChange={setsustainableAgriculture} />
+            <Slider label="Sustainable Transport" value={sustainableTransport} onChange={setsustainableTransport} />
           </div>
           <div className="categories">
-            <h2>Select categories you're interested in:</h2>
-            <label>
-              <input
-                type="checkbox"
-                value="Tech"
-                checked={categories.includes('Tech')}
-                onChange={() => handleCategoryChange('Tech')}
-              />
-              Tech
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="Fashion"
-                checked={categories.includes('Fashion')}
-                onChange={() => handleCategoryChange('Fashion')}
-              />
-              Fashion
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="Energy"
-                checked={categories.includes('Energy')}
-                onChange={() => handleCategoryChange('Energy')}
-              />
-              Energy
-            </label>
+            <h2 className="categories-heading">Select categories you're interested in:</h2>
+            <div className="checkbox-container">
+              <label>
+                <input
+                  type="checkbox"
+                  id="tech"
+                  value="Tech"
+                  checked={categories.includes('Tech')}
+                  onChange={() => handleCategoryChange('Tech')}
+                />
+                <label htmlFor="tech">Technology</label>
+
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  value="Fashion"
+                  id="fashion"
+                  checked={categories.includes('Fashion')}
+                  onChange={() => handleCategoryChange('Fashion')}
+                />
+                <label htmlFor="fashion">Fashion and Apparel</label>
+          
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  value="Energy"
+                  id="energy"
+                  checked={categories.includes('Energy')}
+                  onChange={() => handleCategoryChange('Energy')}
+                />
+                <label htmlFor="energy">Energy</label>
+
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  value="ConstructionRealEstate"
+                  id="ConstructionRealEstate"
+                  checked={categories.includes('Construction')}
+                  onChange={() => handleCategoryChange('Construction')}
+                />
+                <label htmlFor="ConstructionRealEstate">Real Estate & Construction</label>
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  value="Transportation"
+                  id="Transportation"
+                  checked={categories.includes('Transportation')}
+                  onChange={() => handleCategoryChange('Transportation')}
+                />
+                <label htmlFor="Transportation">Transportation</label>
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  value="Agriculture"
+                  id="Agriculture"
+                  checked={categories.includes('Agriculture')}
+                  onChange={() => handleCategoryChange('Agriculture')}
+                />
+                <label htmlFor="Agriculture">Agriculture & Food</label>
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  value="Healthcare"
+                  id="Healthcare"
+                  checked={categories.includes('Healthcare')}
+                  onChange={() => handleCategoryChange('Healthcare')}
+                />
+                <label htmlFor="Healthcare">Healthcare</label>
+              </label>
+            </div>
           </div>
         </div>
       </div>

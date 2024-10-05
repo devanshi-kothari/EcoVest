@@ -15,10 +15,6 @@ app.get('/api/user', (req, res) => {
   });
 });
 
-// Start the server and listen on the defined port
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
 
 
 const axios = require('axios');
@@ -85,6 +81,7 @@ app.post('/create_link_token', async (req, res) => {
 //   }
 // });
 
-// app.listen(5190, () => {
-//   console.log('Server running on port 5190');
-// });
+// Start the server and listen on the defined port
+app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+      });

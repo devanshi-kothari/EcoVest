@@ -8,7 +8,7 @@ function Investments() {
     <div className="home-container">
       <Sidebar />
       <div className='content'>
-      Hello, welcome to your investments.
+      <h2> Hello, welcome to your investments. </h2>
       
       </div>
 

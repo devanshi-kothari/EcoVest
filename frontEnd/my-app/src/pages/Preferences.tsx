@@ -61,19 +61,63 @@ function Preferences() {
                 <input
                   type="checkbox"
                   value="Fashion"
+                  id="fashion"
                   checked={categories.includes('Fashion')}
                   onChange={() => handleCategoryChange('Fashion')}
                 />
-                Fashion
+                <label htmlFor="fashion">Fashion and Apparel</label>
+          
               </label>
               <label>
                 <input
                   type="checkbox"
                   value="Energy"
+                  id="energy"
                   checked={categories.includes('Energy')}
                   onChange={() => handleCategoryChange('Energy')}
                 />
-                Energy
+                <label htmlFor="energy">Energy</label>
+
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  value="ConstructionRealEstate"
+                  id="ConstructionRealEstate"
+                  checked={categories.includes('Construction')}
+                  onChange={() => handleCategoryChange('Construction')}
+                />
+                <label htmlFor="ConstructionRealEstate">Real Estate & Construction</label>
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  value="Transportation"
+                  id="Transportation"
+                  checked={categories.includes('Transportation')}
+                  onChange={() => handleCategoryChange('Transportation')}
+                />
+                <label htmlFor="Transportation">Transportation</label>
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  value="Agriculture"
+                  id="Agriculture"
+                  checked={categories.includes('Agriculture')}
+                  onChange={() => handleCategoryChange('Agriculture')}
+                />
+                <label htmlFor="Agriculture">Agriculture & Food</label>
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  value="Healthcare"
+                  id="Healthcare"
+                  checked={categories.includes('Healthcare')}
+                  onChange={() => handleCategoryChange('Healthcare')}
+                />
+                <label htmlFor="Healthcare">Healthcare</label>
               </label>
             </div>
           </div>

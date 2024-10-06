@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.services.investment_recommender import generate_investment_recommendations
+from services.investment_recommender import generate_investment_recommendations
 
 bp = Blueprint('investments', __name__, url_prefix='/api/investments')
 

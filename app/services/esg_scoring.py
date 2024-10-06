@@ -28,7 +28,7 @@ sp500_tickers = get_sp500_companies()
 print(f"Total S&P 500 companies: {len(sp500_tickers)}")
 print(sp500_tickers)
 
-def get_esg_data(tickers, api_key = "ZWLkv7W9wFD3MS1pLBluFGIRvLSBtQQ3", year=2021):
+def get_esg_data(tickers, api_key = "insert_api_key", year=2021):
     esg_data = {}
     for ticker in tickers:
         try:

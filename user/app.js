@@ -1,12 +1,17 @@
 // app.js
 require('dotenv').config();
 const express = require('express');
+<<<<<<< Updated upstream
 const mongoose = require('mongoose');
 const Transaction = require('./models/Transaction');
+=======
+const { join } = require("path");
+>>>>>>> Stashed changes
 
 const app = express();
 app.use(express.json());
 
+<<<<<<< Updated upstream
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -16,6 +21,24 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => console.error('Failed to connect to MongoDB', err));
 API = "/api";
 // Routes
+=======
+app.use(express.static(join(__dirname, 'user')));
+
+// Endpoint to serve the configuration file
+app.get("/auth_config.json", (req, res) => {
+    res.sendFile(join(__dirname, "auth_config.json"));
+});
+
+// Serve the index page for all other requests
+app.get("/*", (_, res) => {
+    res.sendFile(join(__dirname, "/frontend/my_app/index.html"));
+});
+
+// Listen on port 3000
+app.listen(3000, () => console.log("Application running on port 3000"));
+
+const { createAuth0Client } = require('@auth0/auth0-spa-js');
+>>>>>>> Stashed changes
 
 // 1. Create a new transaction
 app.post(API + '/transactions', async (req, res) => {
@@ -30,6 +53,7 @@ app.post(API + '/transactions', async (req, res) => {
     }
 });
 
+<<<<<<< Updated upstream
 // 2. Get all transactions for a user
 app.get(API + '/transactions/:userId', async (req, res) => {
     try {
@@ -70,3 +94,45 @@ app.get(API + '/transactions/:userId', async (req, res) => {
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+=======
+let auth0Client = null;
+
+const configureClient = async () => {
+    auth0Client = await createAuth0Client({
+        domain: process.env.AUTH0_DOMAIN,
+        clientId: process.env.AUTH0_CLIENT_ID
+    });
+};
+
+const updateUI = async () => {
+    const isAuthenticated = await auth0Client.isAuthenticated();
+    document.getElementById("btn-logout").disabled = !isAuthenticated;
+    document.getElementById("btn-login").disabled = isAuthenticated;
+};
+
+const login = async () => {
+    await auth0Client.loginWithRedirect({
+        authorizationParams: {
+            redirect_uri: window.location.origin
+        }
+    });
+};
+
+const logout = () => {
+    auth0Client.logout({
+        returnTo: window.location.origin
+    });
+};
+
+window.onload = async () => {
+    await configureClient();
+    updateUI();
+
+    // Handle the case where the user is redirected back to your app after login
+    if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
+        // Process the login result
+        await auth0Client.handleRedirectCallback();
+        window.history.replaceState({}, document.title, "/");
+    }
+};
+>>>>>>> Stashed changes

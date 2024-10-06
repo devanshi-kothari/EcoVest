@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Home.css';
 import Sidebar from '../components/Sidebar';
-import axios from 'axios';
 
 function Investments() {
   interface Transaction {
@@ -14,22 +13,32 @@ function Investments() {
   // Need to add in auth for user 
    
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const userId = 'user123'; // Replace with the actual user ID
+  const userId = 'user123'; 
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get(`/api/transactions/${userId}`);
-        console.log('response' + response);
-        const data = Array.isArray(response.data) ? response.data : [response.data];
-        setTransactions(data);
+        const response = await fetch(`http://localhost:5109/api/transactions/${userId}`);
+        const contentType = response.headers.get('content-type');
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Error response:', errorText);
+          throw new Error('Network response was not ok');
+        }
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        const data = await response.json();
+        console.log('response data:', data);
+        const transactionsData = Array.isArray(data) ? data : [data];
+        setTransactions(transactionsData);
       } catch (error) {
         console.error('Error fetching transactions:', error);
       }
     };
-
+  
     fetchTransactions();
   }, [userId]);
+
 
   return (
     <div className="home-container">

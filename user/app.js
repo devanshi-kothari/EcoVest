@@ -70,3 +70,59 @@ app.get(API + '/transactions/:userId', async (req, res) => {
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
+// Endpoint to serve the configuration file
+app.get("/auth_config.json", (req, res) => {
+    res.sendFile(join(__dirname, "auth_config.json"));
+});
+
+// Serve the index page for all other requests
+app.get("/*", (_, res) => {
+    res.sendFile(join(__dirname, "/frontend/my_app/index.html"));
+});
+
+// Listen on port 3000
+app.listen(3000, () => console.log("Application running on port 3000"));
+
+const { createAuth0Client } = require('@auth0/auth0-spa-js');
+
+let auth0Client = null;
+
+const configureClient = async () => {
+    auth0Client = await createAuth0Client({
+        domain: process.env.AUTH0_DOMAIN,
+        clientId: process.env.AUTH0_CLIENT_ID
+    });
+};
+
+const updateUI = async () => {
+    const isAuthenticated = await auth0Client.isAuthenticated();
+    document.getElementById("btn-logout").disabled = !isAuthenticated;
+    document.getElementById("btn-login").disabled = isAuthenticated;
+};
+
+const login = async () => {
+    await auth0Client.loginWithRedirect({
+        authorizationParams: {
+            redirect_uri: window.location.origin
+        }
+    });
+};
+
+const logout = () => {
+    auth0Client.logout({
+        returnTo: window.location.origin
+    });
+};
+
+window.onload = async () => {
+    await configureClient();
+    updateUI();
+
+    // Handle the case where the user is redirected back to your app after login
+    if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
+        // Process the login result
+        await auth0Client.handleRedirectCallback();
+        window.history.replaceState({}, document.title, "/");
+    }
+};

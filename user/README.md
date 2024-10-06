@@ -5,9 +5,7 @@ sample body
 `{
   "userId": "user123",
   "stockSymbol": "NVDA",
-  "transactionType": "sell",
-  "quantity": 13,
-  "price": 99
+  "quantity": 13
 }`
 
 - GET user data based on the id http://localhost:5109/api/transactions/:id

@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from services.investment_recommender import generate_investment_recommendations
 from services.vectorizer import vectorize
 
-bp = Blueprint('investments', __name__, url_prefix='/api/investments')
+bp = Blueprint('investments', __name__, url_prefix='/api/investments') 
 
 @bp.route('/recommend', methods=['POST'])
 def recommend_investments():

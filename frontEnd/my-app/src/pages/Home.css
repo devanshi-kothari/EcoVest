@@ -8,11 +8,11 @@
 --onyx: #393943ff; **/
 
 /** Color Variables
---dark-moss-green: #696A37ff;
---lion: #A39065ff;
---paynes-gray: #5D7273ff;
---field-drab: #534B0Cff;
---dark-goldenrod: #B48B00ff; **/
+--dark-moss-green: rgb(105, 106, 55);
+--lion: rgb(163, 144, 101);
+--paynes-gray: rgb(93, 114, 115);
+--field-drab: rgb(83, 75, 12);
+--dark-goldenrod: rgb(180, 139, 0); **/
 
 /* Ensure html and body take up the full height */
 
@@ -79,21 +79,29 @@ body {
 
 
 /* Custom scrollbar styles for WebKit browsers */
-.preference::-webkit-scrollbar, .categories::-webkit-scrollbar {
+.preference::-webkit-scrollbar, 
+.categories::-webkit-scrollbar,
+.recommendations-container::-webkit-scrollbar {
   width: 8px; /* Width of the scrollbar */
 }
 
-.preference::-webkit-scrollbar-track, .categories::-webkit-scrollbar-track {
+.preference::-webkit-scrollbar-track, 
+.categories::-webkit-scrollbar-track,
+.recommendations-container::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.1); /* Track color */
   border-radius: 10px;
 }
 
-.preference::-webkit-scrollbar-thumb, .categories::-webkit-scrollbar-thumb {
+.preference::-webkit-scrollbar-thumb, 
+.categories::-webkit-scrollbar-thumb,
+.recommendations-container::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.5); /* Thumb color */
   border-radius: 10px;
 }
 
-.preference::-webkit-scrollbar-thumb:hover, .categories::-webkit-scrollbar-thumb:hover {
+.preference::-webkit-scrollbar-thumb:hover, 
+.categories::-webkit-scrollbar-thumb:hover,
+.recommendations-container::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.7); /* Thumb color on hover */
 }
 
@@ -212,4 +220,162 @@ body {
 
 .categories input[type="checkbox"]:checked + label::before {
   background-color: #4CAF50; /* Background color for selected */
+}
+
+.login-button {
+  background-color: rgb(180, 139, 0); 
+  box-shadow:rgba(51, 51, 51, 0.5);
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 15px 32px; /* Some padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make the button inline-block */
+  font-size: 16px; /* Increase font size */
+  margin: 4px 2px; /* Some margin */
+  cursor: pointer; /* Pointer/hand icon */
+  border-radius: 12px; /* Rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.login-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.logout-button {
+  background-color: rgb(83, 75, 12); 
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 15px 32px; /* Some padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make the button inline-block */
+  font-size: 16px; /* Increase font size */
+  margin: 4px 2px; /* Some margin */
+  cursor: pointer; /* Pointer/hand icon */
+  border-radius: 12px; /* Rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.logout-button:hover {
+  background-color: rgb(106, 95, 16); /* Darker red on hover */
+}
+
+.preferences-button {
+  background-color: rgb(180, 139, 0); 
+  box-shadow:rgba(51, 51, 51, 0.5);
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 15px 32px; /* Some padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make the button inline-block */
+  font-size: 16px; /* Increase font size */
+  margin: 4px; /* Some margin */
+  margin-left: 150px;
+  cursor: pointer; /* Pointer/hand icon */
+  border-radius: 12px; /* Rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.preferences-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.recommendations-container {
+  justify-content: space-between;
+  max-height: 650px;
+  background-color: rgba(51, 51, 51, 0.5); /* 50% opacity */
+  border-radius: 10px;
+  padding: 150px;
+  overflow: auto; /* scrollable */
+  justify-content: center;
+}
+
+
+.recommendations-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.recommendations-container, .actions-container {
+  flex: 1;
+  padding: 80px;
+  max-height: 600px;
+  margin-right: 20px;
+}
+
+.actions-container {
+  justify-content: space-between;
+  max-height: 650px;
+  background-color: rgba(51, 51, 51, 0.5); /* 50% opacity */
+  border-radius: 10px;
+  overflow: auto; /* scrollable */
+  justify-content: center;
+  max-width: 200px;
+}
+
+.accept-button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.accept-button:hover {
+  background-color: #45a049;
+}
+
+.reject-button {
+  background-color: #f44336; /* Red */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.reject-button:hover {
+  background-color: #d32f2f;
+}
+
+.no-bullets {
+  list-style-type: none;
+  padding: 0;
+}
+
+.no-bullets li {
+  margin-bottom: 10px; /* Optional: Add some space between list items */
+}
+
+.key-button {
+  font-size: 20px;
+  background-color:rgba(214, 214, 214, 0.5);
+  border: none;
+  color: white;
+  padding: 15px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }

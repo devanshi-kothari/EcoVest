@@ -18,6 +18,7 @@ function Investments() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const userId = 'user123'; // Replace with the actual user ID
 
+
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
@@ -72,7 +73,6 @@ function Investments() {
       },
     ],
   };
-
 
   return (
     <div className="home-container">

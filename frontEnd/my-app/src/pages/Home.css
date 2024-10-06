@@ -318,6 +318,7 @@ actions-container::-webkit-scrollbar-thumb:hover,
   overflow: auto; /* scrollable */
   justify-content: center;
   max-width: 200px;
+  max-height: 600px;
 }
 
 .accept-button {

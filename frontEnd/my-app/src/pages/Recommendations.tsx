@@ -71,6 +71,7 @@ const mockData = [
 function Recommendations() {
   const { isAuthenticated, loginWithRedirect } = useAuth0();
 
+
   interface PortfolioData {
     old_portfolio: Record<string, number>;
     new_portfolio: Record<string, number>;
@@ -94,8 +95,9 @@ function Recommendations() {
       .then(response => response.json())
       .then(data => setData(data))
       .catch(error => console.error('Error fetching data:', error));
-    setData(data);
+    setData(data); // set this to data when the flask backend is running
   }, []);
+
 
   if (!data) {
     return     <div className="home-container">
@@ -214,13 +216,26 @@ function Recommendations() {
     },
   };
 
+  
+  const sustainableBarData = {
+    labels: ['Old Sustainability', 'New Sustainability'],
+    datasets: [
+      {
+        label: 'Percentage Returns',
+        data: [oldSustainability, newSustainability],
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+      },
+    ],
+  };
 
   const handleAccept = (type, key) => {
     setAcceptedRecommendations([...acceptedRecommendations, { type, key }]);
+    sendFeedback(type, key, 'yes', data);
   };
 
   const handleReject = (type, key) => {
     setRejectedRecommendations([...rejectedRecommendations, { type, key }]);
+    sendFeedback(type, key, 'no', data);
   };
 
   const isAcceptedOrRejected = (type, key) => {
@@ -229,6 +244,57 @@ function Recommendations() {
       rejectedRecommendations.some(rec => rec.type === type && rec.key === key)
     );
   };
+
+  const sendFeedback = async (type, key, userResponse, data) => {
+    const portfolio = data[1].new_portfolio;
+    const sells = data[4].sells; // Extract sells data
+    const currentBuys = data[3].current_buys; // Extract current buys data
+
+    let change = {};
+
+    if (type === 'sells') {
+      const changeValue = userResponse === 'yes' ? (sells[key] || 0) : 0;
+      change = {
+        [key]: changeValue,
+      };
+    } else if (type === 'current_buys') {
+      const changeValue = userResponse === 'yes' ? (currentBuys[key] || 0) : 0;
+      change = {
+        [key]: changeValue,
+      };
+    }
+
+    const payload = {
+      portfolio,
+      change,
+      user_response: userResponse,
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/api/investments/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+      console.log('Feedback response:', result);
+    } catch (error) {
+      console.error('Error sending feedback:', error);
+    }
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="content">
+        <h2>You need to be authenticated to view this page.</h2>
+        <button className="login-button" onClick={loginWithRedirect}>Log In</button>
+      </div>
+    );
+  }
+
 
   return (
     <div className="home-container">
@@ -244,6 +310,12 @@ function Recommendations() {
 
             <h3>New Buys</h3>
             <Doughnut data={doughnutData} options={{ responsive: true }} />
+
+            <h3>Investment Returns</h3>
+            <Bar data={horizontalBarData} options={{ responsive: true }} />
+            
+            <h3>Sustainability</h3>
+            <Bar data={horizontalBarData} options={{ responsive: true }} />
           </div>
           <div className="actions-container">
             

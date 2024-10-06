@@ -5,6 +5,8 @@ import { Bar, Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { useAuth0 } from '@auth0/auth0-react';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
+
+
 const mockData = [
   {
     "old_portfolio": {
@@ -66,7 +68,6 @@ const mockData = [
   }
 ];
 
-
 function Recommendations() {
   const { isAuthenticated, loginWithRedirect } = useAuth0();
 
@@ -88,15 +89,12 @@ function Recommendations() {
   const [acceptedRecommendations, setAcceptedRecommendations] = useState([]);
   const [rejectedRecommendations, setRejectedRecommendations] = useState([]);
 
-
   useEffect(() => {
-    // Fetch the data from the API
-    /*
     fetch('http://localhost:5000/api/recommendations')
       .then(response => response.json())
       .then(data => setData(data))
-      .catch(error => console.error('Error fetching data:', error)); */
-    setData(mockData);
+      .catch(error => console.error('Error fetching data:', error));
+    setData(data);
   }, []);
 
   if (!data) {

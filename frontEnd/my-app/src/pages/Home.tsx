@@ -20,13 +20,18 @@ function Home() {
   return (
     <div className="home-container">
       <Sidebar />
+
       <div className="content">
         {!isAuthenticated ? (
-          <button onClick={() => loginWithRedirect()}>Log In</button>
+          <div>
+          <h2>Welcome to Ecovest</h2>  
+          <h3>Please log in to access your account.</h3>
+          <button className="login-button" onClick={() => loginWithRedirect()}>Log In</button>
+        </div>        
         ) : (
           <div>
             {user && <h2>Hello, {user.nickname}</h2>}
-            <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log Out</button>
+            <button className="login-button" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log Out</button>
             </div>
         )}
       </div>

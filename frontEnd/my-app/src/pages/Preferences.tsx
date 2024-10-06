@@ -6,16 +6,16 @@ import Slider from '../components/Slider';
 import { useState } from 'react';
 
 function Preferences() {
-  const [energy, setEnergy] = useState(2);
-  const [water, setWater] = useState(2);
-  const [waste, setWaste] = useState(2);
-  const [waterConservation, setWaterConservation] = useState(2);
-  const [GreenBuildings, setGreenBuildings] = useState(2);
-  const [fairLabor, setfairLabor] = useState(2);
-  const [carbonReduction, setcarbonReduction] = useState(2);
-  const [sustainableAgriculture, setsustainableAgriculture] = useState(2);
-  const [sustainableTransport, setsustainableTransport] = useState(2);
-  const [climateResilience, setclimateResilience] = useState(2);
+  const [energy, setEnergy] = useState(1);
+  const [water, setWater] = useState(1);
+  const [waste, setWaste] = useState(1);
+  const [waterConservation, setWaterConservation] = useState(1);
+  const [GreenBuildings, setGreenBuildings] = useState(1);
+  const [fairLabor, setfairLabor] = useState(1);
+  const [carbonReduction, setcarbonReduction] = useState(1);
+  const [sustainableAgriculture, setsustainableAgriculture] = useState(1);
+  const [sustainableTransport, setsustainableTransport] = useState(1);
+  const [climateResilience, setclimateResilience] = useState(1);
 
   const [categories, setCategories] = useState<string[]>([]);
 
@@ -26,6 +26,51 @@ function Preferences() {
         : [...prevCategories, category]
     );
   };
+
+  const sendDataToBackend = async () => {
+    const preferences = {
+      solar_energy: energy,
+      wind_energy: water,
+      biodiversity: waste,
+      low_carbon_footprint: waterConservation,
+      renewable_energy_investment: GreenBuildings,
+      fossil_fuel_divestment: fairLabor,
+      carbon_reduction: carbonReduction,
+      sustainable_agriculture: sustainableAgriculture,
+      sustainable_transport: sustainableTransport,
+      climate_resilience: climateResilience,
+    };
+
+    const currentPortfolio = {
+      AAPL: 50,
+      TSLA: 30,
+      AMZN: 20,
+      GOOGL: 40,
+      MSFT: 60,
+    };
+
+    const payload = {
+      preferences,
+      current_portfolio: currentPortfolio,
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/api/investments/recommend', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const recommendations = await response.json();
+      console.log('Recommendations:', recommendations);
+      // Handle the recommendations data as needed
+    } catch (error) {
+      console.error('Error sending data to backend:', error);
+    }
+  };
+
   return (
     <div className="home-container">
       <Sidebar />
@@ -119,6 +164,8 @@ function Preferences() {
                 />
                 <label htmlFor="Healthcare">Healthcare</label>
               </label>
+              <button className="preferences-button" onClick={sendDataToBackend}>Submit Preferences</button>
+
             </div>
           </div>
         </div>

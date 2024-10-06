@@ -83,6 +83,8 @@ function Recommendations() {
   }
 
   const [data, setData] = useState<PortfolioData[] | null>(null);
+  const [acceptedRecommendations, setAcceptedRecommendations] = useState([]);
+  const [rejectedRecommendations, setRejectedRecommendations] = useState([]);
 
 
   useEffect(() => {
@@ -213,38 +215,90 @@ function Recommendations() {
     },
   };
 
+
+  const handleAccept = (type, key) => {
+    setAcceptedRecommendations([...acceptedRecommendations, { type, key }]);
+  };
+
+  const handleReject = (type, key) => {
+    setRejectedRecommendations([...rejectedRecommendations, { type, key }]);
+  };
+
+  const isAcceptedOrRejected = (type, key) => {
+    return (
+      acceptedRecommendations.some(rec => rec.type === type && rec.key === key) ||
+      rejectedRecommendations.some(rec => rec.type === type && rec.key === key)
+    );
+  };
+
   return (
     <div className="home-container">
       <Sidebar />
       <div className="content">
-        <div className="recommendations-container">
-        <h2>Hello, Welcome to your Recommendations.</h2>
+        <div className="recommendations-wrapper">
+          <div className="recommendations-container">
+            <h2>Hello, Welcome to your Recommendations.</h2>
 
-        <h3>Portfolio Comparison</h3>
-        <Bar data={barData} options={barOptions} />
+            <h3>Portfolio Comparison</h3>
+            <Bar data={barData} options={barOptions} />
 
-        <h3>New Buys</h3>
-        <Doughnut data={doughnutData} options={{ responsive: true }} />
+            <h3>New Buys</h3>
+            <Doughnut data={doughnutData} options={{ responsive: true }} />
+          </div>
+          <div className="actions-container">
+            
+            <h2>Recommended Buys</h2>
+              <ul className="no-bullets">
+                {Object.entries(currentBuys).map(([key, value]) => (
+                  !isAcceptedOrRejected('current_buys', key) && (
+                    
+                    <li key={key}>
+                      <span className="key-button">{key}: {value} 
+                        <>
+                        <br />
+                        <button className="accept-button" onClick={() => handleAccept('current_buys', key)}>Accept</button>
+                        <button className="reject-button" onClick={() => handleReject('current_buys', key)}>Reject</button>
+                      </>
+                      </span>
+                    </li>
+                  )
+                ))}
+              </ul>
 
-        <h3>Current Buys</h3>
-        <ul>
-          {Object.entries(currentBuys).map(([key, value]) => (
-            <li key={key}>{key}: {value}</li>
-          ))}
-        </ul>
-
-        <h3>Sells</h3>
-        <ul>
-          {Object.entries(sells).map(([key, value]) => (
-            <li key={key}>{key}: {value}</li>
-          ))}
-        </ul>
-
-
-        <h3>Returns and Sustainability</h3>
-        <Bar data={horizontalBarData} options={horizontalBarOptions} />
-
-      </div>
+              <h2>Recommended Sells</h2>
+              <ul className="no-bullets">
+                {Object.entries(sells).map(([key, value]) => (
+          
+                    !isAcceptedOrRejected('sells', key) && (
+                        <li key={key}>
+                        <span className="key-button">{key}: {value} 
+                      <>
+                      <br />
+                        <button className="accept-button" onClick={() => handleAccept('sells', key)}>Accept</button>
+                        <button className="reject-button" onClick={() => handleReject('sells', key)}>Reject</button>
+                      </>
+                      </span>
+                    </li>
+                    )
+                ))}
+              </ul>
+            </div>
+            <div className="actions-container">
+              <h2>Actions</h2>
+              <h3>Accepted Recommendations</h3>
+              <ul>
+                {acceptedRecommendations.map((rec, index) => (
+                  <li key={index}>{rec.type} - {rec.key}</li>
+                ))}
+              </ul>
+              <h3>Rejected Recommendations</h3>
+              <ul>
+                {rejectedRecommendations.map((rec, index) => (
+                  <li key={index}>{rec.type} - {rec.key}</li>
+                ))}
+              </ul>
+          </div>
+        </div>
       </div>
     </div>
   );

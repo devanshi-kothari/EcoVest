@@ -2,6 +2,10 @@ from services.portfolio_analyzer import analyze_portfolio
 from services.sustainability_scorer import score_sustainability
 from services.ai_reccomendor import get_stock_suggestions
 import json
+import numpy as np
+from scipy.optimize import minimize
+import random
+import yfinance as yf
 
 def generate_investment_recommendations(user_preferences, current_portfolio):
     # Analyze the current portfolio
@@ -39,6 +43,14 @@ def generate_investment_recommendations(user_preferences, current_portfolio):
 
     print(new_portfolio)
 
+    old_returns = calculate_portfolio_returns(current_portfolio)
+    new_returns = calculate_portfolio_returns(new_portfolio)
+    
+    # Calculate sustainability scores
+    old_sustainability = calculate_sustainability_score(current_portfolio)
+    new_sustainability = calculate_sustainability_score(new_portfolio)
+    sustainability_improvement = (new_sustainability - old_sustainability) / old_sustainability * 100
+
 
     # recommendations = convert_weights_to_actions(current_portfolio, new_portfolio)
 
@@ -48,16 +60,48 @@ def generate_investment_recommendations(user_preferences, current_portfolio):
     outputs.append({"new_buys": new_buys})
     outputs.append({"current_buys": current_buys})
     outputs.append({"sells": sells})
+    outputs.append({"old_returns": f"{old_returns:.2%}"})
+    outputs.append({"new_returns": f"{new_returns:.2%}"})
+    outputs.append({"returns_difference": f"{new_returns - old_returns:.2%}"})
+    outputs.append({"old_sustainability": f"{old_sustainability:.2f}"})
+    outputs.append({"new_sustainability": f"{new_sustainability:.2f}"})
+    outputs.append({"sustainability_improvement": f"{sustainability_improvement:.2f}%"})
+    
+
     print(outputs)
 
     return outputs
 
 
 
-
-import numpy as np
-from scipy.optimize import minimize
-import random
+def calculate_portfolio_returns(portfolio):
+    total_value = sum(portfolio.values())
+    returns = 0
+    for stock, shares in portfolio.items():
+        try:
+            ticker = yf.Ticker(stock)
+            historical_data = ticker.history(period="1y")
+            if not historical_data.empty and len(historical_data) > 1:
+                annual_return = (historical_data['Close'].iloc[-1] / historical_data['Close'].iloc[0]) - 1
+            else:
+                print(f"Warning: Not enough historical data for {stock}. Using 0% return.")
+                annual_return = 0
+            weight = shares / total_value
+            returns += weight * annual_return
+        except Exception as e:
+            print(f"Error processing {stock}: {str(e)}. Using 0% return.")
+            # If there's an error, assume 0% return for this stock
+            pass
+    return returns
+    # total_value = sum(portfolio.values())
+    # returns = 0
+    # for stock, shares in portfolio.items():
+    #     ticker = yf.Ticker(stock)
+    #     historical_data = ticker.history(period="1y")
+    #     annual_return = (historical_data['Close'][-1] / historical_data['Close'][0]) - 1
+    #     weight = shares / total_value
+    #     returns += weight * annual_return
+    # return returns
 
 def optimize_portfolio(current_portfolio, user_preferences, esg_data, universe):
 
@@ -103,13 +147,14 @@ def optimize_portfolio(current_portfolio, user_preferences, esg_data, universe):
 
     return dict(zip(universe, result.x))
 
-def calculate_sustainability_score(weights, esg_data, user_preferences):
-    score = 0
-    for stock, weight in zip(universe, weights):
-        stock_esg = esg_data[stock]
-        stock_score = sum(stock_esg[category] * user_preferences[category] for category in user_preferences)
-        score += weight * stock_score
-    return score
+def calculate_sustainability_score(portfolio):
+    return sum(shares * random.uniform(0, 1) for shares in portfolio.values())
+    # score = 0
+    # for stock, weight in zip(universe, weights):
+    #     stock_esg = esg_data[stock]
+    #     stock_score = sum(stock_esg[category] * user_preferences[category] for category in user_preferences)
+    #     score += weight * stock_score
+    # return score
 
 
 def convert_weights_to_actions(current_portfolio, optimized_weights):

@@ -1,5 +1,7 @@
 from services.portfolio_analyzer import analyze_portfolio
 from services.sustainability_scorer import score_sustainability
+from services.ai_reccomendor import get_stock_suggestions
+import json
 
 def generate_investment_recommendations(user_preferences, current_portfolio):
     # Analyze the current portfolio
@@ -11,14 +13,46 @@ def generate_investment_recommendations(user_preferences, current_portfolio):
     
     # Generate recommendations based on analysis and scores
     # recommendations = optimize_portfolio(portfolio_analysis, sustainability_scores, user_preferences)
-    universe = []
+    suggestions = json.loads(get_stock_suggestions(current_portfolio, user_preferences))
+    # universe = []
+    # for stock in current_portfolio:
+    #     universe.append(stock)
+    # new_portfolio = optimize_portfolio(current_portfolio, user_preferences, {}, universe)
+    new_portfolio = {}
+    new_buys = {}
+    current_buys = {} # buying more a stock that is currently held
+    sells = {}
+    for stock in suggestions:
+        if stock in current_portfolio:
+            new_portfolio[stock] = current_portfolio[stock]+suggestions[stock]
+            if suggestions[stock] > 0:
+                current_buys[stock] = suggestions[stock]
+            elif suggestions[stock] < 0:
+                sells[stock] = suggestions[stock]
+        elif suggestions[stock] > 0:
+            new_buys[stock] = suggestions[stock]
+            new_portfolio[stock] = suggestions[stock]
+    
     for stock in current_portfolio:
-        universe.append(stock)
-    new_portfolio = optimize_portfolio(current_portfolio, user_preferences, {}, universe)
+        if stock not in new_portfolio:
+            new_portfolio[stock] = current_portfolio[stock]
 
-    recommendations = convert_weights_to_actions(current_portfolio, new_portfolio)
+    print(new_portfolio)
 
-    return recommendations
+
+    # recommendations = convert_weights_to_actions(current_portfolio, new_portfolio)
+
+    outputs = []
+    outputs.append({"old_portfolio": current_portfolio})
+    outputs.append({"new_portfolio": new_portfolio})
+    outputs.append({"new_buys": new_buys})
+    outputs.append({"current_buys": current_buys})
+    outputs.append({"sells": sells})
+    print(outputs)
+
+    return outputs
+
+
 
 
 import numpy as np

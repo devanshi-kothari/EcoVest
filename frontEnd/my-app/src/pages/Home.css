@@ -81,12 +81,14 @@ body {
 /* Custom scrollbar styles for WebKit browsers */
 .preference::-webkit-scrollbar, 
 .categories::-webkit-scrollbar,
+.actions-container::-webkit-scrollbar,
 .recommendations-container::-webkit-scrollbar {
   width: 8px; /* Width of the scrollbar */
 }
 
 .preference::-webkit-scrollbar-track, 
 .categories::-webkit-scrollbar-track,
+.actions-container::-webkit-scrollbar-track,
 .recommendations-container::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.1); /* Track color */
   border-radius: 10px;
@@ -94,6 +96,7 @@ body {
 
 .preference::-webkit-scrollbar-thumb, 
 .categories::-webkit-scrollbar-thumb,
+.actions-container::-webkit-scrollbar-thumb,
 .recommendations-container::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.5); /* Thumb color */
   border-radius: 10px;
@@ -101,6 +104,7 @@ body {
 
 .preference::-webkit-scrollbar-thumb:hover, 
 .categories::-webkit-scrollbar-thumb:hover,
+actions-container::-webkit-scrollbar-thumb:hover,
 .recommendations-container::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.7); /* Thumb color on hover */
 }
@@ -314,6 +318,7 @@ body {
   overflow: auto; /* scrollable */
   justify-content: center;
   max-width: 200px;
+  max-height: 600px;
 }
 
 .accept-button {
@@ -336,7 +341,7 @@ body {
 }
 
 .reject-button {
-  background-color: #f44336; /* Red */
+  background-color: rgb(83, 75, 12, 0.5);
   border: none;
   color: white;
   padding: 10px 20px;

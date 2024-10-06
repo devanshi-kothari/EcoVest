@@ -7,7 +7,7 @@ interface SliderProps {
   onChange: (value: number) => void;
 }
 
-const categories = ['Low', 'Medium', 'High'];
+// const categories = ['Low', 'Medium', 'High'];
 
 function Slider({ label, value, onChange }: SliderProps) {
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,12 +21,12 @@ function Slider({ label, value, onChange }: SliderProps) {
       <input
         type="range"
         min="0"
-        max="2"
-        step="1"
+        max="1"
+        step=".1"
         value={value}
         onChange={handleSliderChange}
       />
-      <span className = "slider-category">{categories[value]}</span>
+      <span className = "slider-category">{value}</span>
     </div>
   );
 }

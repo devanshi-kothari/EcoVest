@@ -3,7 +3,7 @@ import './Home.css';
 import Sidebar from '../components/Sidebar';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
-
+import { useAuth0 } from '@auth0/auth0-react';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const mockData = [
   {
@@ -68,6 +68,8 @@ const mockData = [
 
 
 function Recommendations() {
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
+
   interface PortfolioData {
     old_portfolio: Record<string, number>;
     new_portfolio: Record<string, number>;
@@ -131,7 +133,6 @@ function Recommendations() {
       },
     ],
   };
-
     
   const barOptions = {
     responsive: true,
@@ -234,6 +235,7 @@ function Recommendations() {
   return (
     <div className="home-container">
       <Sidebar />
+      {isAuthenticated && (
       <div className="content">
         <div className="recommendations-wrapper">
           <div className="recommendations-container">
@@ -300,6 +302,7 @@ function Recommendations() {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }

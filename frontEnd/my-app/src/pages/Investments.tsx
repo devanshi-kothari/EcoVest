@@ -82,7 +82,7 @@ function Investments() {
         <h2>Hello, welcome to your investments.</h2>
         <h3> Current Portfolio </h3>
         <Pie data={pieData} />
-        <ul>
+        <ul className='no-bullets'>
           {transactions.map((transaction) => (
             <li key={transaction._id}>
               {transaction.quantity} shares of {transaction.stockSymbol} 

@@ -10,11 +10,13 @@ Runs on ```http://localhost:5173/``` <br />
 ## app
 
 inside of app/ directory, run the following to start the flask API:
-python app/run.py 
+`python app/run.py` 
 
 Then request this endpoint: http://localhost:5000/api/investments/recommend
+
 Here's an example of a curl request:
-curl -X POST -H "Content-Type: application/json" -d '{"preferences": {"solar_energy": 0.8, "wind_energy": 0.5, "biodiversity": 0.7,"low_carbon_footprint": 0.9,"renewable_energy_investment": 1.0, "fossil_fuel_divestment": 1.0}, "current_portfolio": {"AAPL": 50, "TSLA": 30, "AMZN": 20, "GOOGL": 40, "MSFT": 60}}' http://localhost:5000/api/investments/recommend
+
+`curl -X POST -H "Content-Type: application/json" -d '{"preferences": {"solar_energy": 0.8, "wind_energy": 0.5, "biodiversity": 0.7,"low_carbon_footprint": 0.9,"renewable_energy_investment": 1.0, "fossil_fuel_divestment": 1.0}, "current_portfolio": {"AAPL": 50, "TSLA": 30, "AMZN": 20, "GOOGL": 40, "MSFT": 60}}' http://localhost:5000/api/investments/recommend`
 
 ## user
 run `npm start` will start the api running on localhost 5109

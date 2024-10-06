@@ -41,8 +41,6 @@ def generate_investment_recommendations(user_preferences, current_portfolio):
         if stock not in new_portfolio:
             new_portfolio[stock] = current_portfolio[stock]
 
-    print(new_portfolio)
-
     old_returns = calculate_portfolio_returns(current_portfolio)
     new_returns = calculate_portfolio_returns(new_portfolio)
     
@@ -93,15 +91,6 @@ def calculate_portfolio_returns(portfolio):
             # If there's an error, assume 0% return for this stock
             pass
     return returns
-    # total_value = sum(portfolio.values())
-    # returns = 0
-    # for stock, shares in portfolio.items():
-    #     ticker = yf.Ticker(stock)
-    #     historical_data = ticker.history(period="1y")
-    #     annual_return = (historical_data['Close'][-1] / historical_data['Close'][0]) - 1
-    #     weight = shares / total_value
-    #     returns += weight * annual_return
-    # return returns
 
 def optimize_portfolio(current_portfolio, user_preferences, esg_data, universe):
 
